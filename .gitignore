@@ -1,0 +1,98 @@
+# My Playground - Git Ignore File
+
+# 로그 파일
+logs/
+*.log
+error.log
+
+# 업로드 파일
+uploads/*
+!uploads/.gitkeep
+
+# 임시 파일
+temp/
+tmp/
+*.tmp
+*.temp
+
+# 환경 설정 파일 (민감한 정보 포함)
+.env
+.env.local
+.env.production
+config.local.php
+
+# Credentials 폴더 (민감한 정보 포함)
+config/credentials/development.php
+config/credentials/production.php
+config/credentials/local.php
+config/credentials/staging.php
+
+# IDE 및 에디터 파일
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS 생성 파일
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# PHP 관련
+vendor/
+composer.lock
+*.php.bak
+
+# 데이터베이스 관련
+*.sql.bak
+*.dump
+database_backup/
+
+# 배포 관련
+deploy/releases/
+deploy/build_*.zip
+deploy/backups/
+
+# 캐시 파일
+cache/
+*.cache
+
+# 세션 파일
+sessions/
+
+# 민감한 파일들
+private/
+secrets/
+.htpasswd
+
+# 테스트 파일
+test_*
+*_test.php
+phpunit.xml
+
+# 개발용 파일
+debug.php
+test.php
+temp.php
+sample.php
+
+# 백업 파일
+*.bak
+backup/
+*.backup
+
+# 압축 파일
+*.zip
+*.tar.gz
+*.rar
+
+# 문서 임시 파일
+*.docx#
+*.doc#
+*.xlsx#
+*.xls# 

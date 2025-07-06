@@ -1,0 +1,152 @@
+<?php
+session_start();
+$pageTitle = "Vocabulary";
+include '../includes/header.php';
+?>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="max-w-4xl mx-auto space-y-8">
+    <h1 class="text-2xl sm:text-3xl font-bold text-center">Vocabulary</h1>
+
+    <div class="bg-card text-card-foreground rounded-lg border p-6 space-y-6">
+      <!-- Add New Word -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold">Add New Word</h2>
+        <form id="vocabularyForm" class="space-y-4">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label for="word" class="text-sm font-medium">Word</label>
+              <input type="text" id="word" name="word" required 
+                     class="w-full px-3 py-2 rounded-md border bg-background">
+            </div>
+            <div class="space-y-2">
+              <label for="meaning" class="text-sm font-medium">Meaning</label>
+              <input type="text" id="meaning" name="meaning" required 
+                     class="w-full px-3 py-2 rounded-md border bg-background">
+            </div>
+          </div>
+          <div class="space-y-2">
+            <label for="example" class="text-sm font-medium">Example</label>
+            <textarea id="example" name="example" rows="2" required 
+                      class="w-full px-3 py-2 rounded-md border bg-background"></textarea>
+          </div>
+          <button type="submit" 
+                  class="w-full bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md">
+            Add Word
+          </button>
+        </form>
+      </div>
+
+      <!-- Word List -->
+      <div class="space-y-4">
+        <h2 class="text-xl font-semibold">Word List</h2>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead>
+              <tr class="border-b bg-muted/50">
+                <th class="px-4 py-3 text-left font-medium">Word</th>
+                <th class="px-4 py-3 text-left font-medium">Meaning</th>
+                <th class="px-4 py-3 text-left font-medium">Example</th>
+                <th class="px-4 py-3 text-left font-medium">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="wordList">
+              <!-- Words will be loaded here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.getElementById('vocabularyForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = {
+    word: document.getElementById('word').value,
+    meaning: document.getElementById('meaning').value,
+    example: document.getElementById('example').value
+  };
+
+  try {
+    const response = await fetch('save_vocabulary.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    if (response.ok) {
+      loadVocabulary();
+      e.target.reset();
+    } else {
+      alert('Failed to save word');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while saving the word');
+  }
+});
+
+async function loadVocabulary() {
+  try {
+    const response = await fetch('fetch_vocabulary.php');
+    const words = await response.json();
+    
+    const wordList = document.getElementById('wordList');
+    wordList.innerHTML = words.map(word => `
+      <tr class="border-b hover:bg-muted/50">
+        <td class="px-4 py-3">${word.word}</td>
+        <td class="px-4 py-3">${word.meaning}</td>
+        <td class="px-4 py-3">${word.example}</td>
+        <td class="px-4 py-3">
+          <div class="flex items-center gap-2">
+            <button onclick="editWord(${word.id})" 
+                    class="text-primary hover:text-primary/90">
+              Edit
+            </button>
+            <button onclick="deleteWord(${word.id})" 
+                    class="text-destructive hover:text-destructive/90">
+              Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while loading words');
+  }
+}
+
+async function deleteWord(id) {
+  if (!confirm('Are you sure you want to delete this word?')) return;
+
+  try {
+    const response = await fetch(`delete_vocabulary.php?id=${id}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      loadVocabulary();
+    } else {
+      alert('Failed to delete word');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while deleting the word');
+  }
+}
+
+function editWord(id) {
+  window.location.href = `voca_edit.html?id=${id}`;
+}
+
+// Load words when page loads
+loadVocabulary();
+</script>
+
+<?php include '../includes/footer.php'; ?>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary Editor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .controls input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vocabulary Editor</h1>
+    <h5><a href="../index.html">home</a>&nbsp;&nbsp;</a><a href="./voca.html">viewer</a></h5>
+    <div class="controls">
+        <input type="text" id="newWord" placeholder="New Word">
+        <input type="text" id="newMeaning" placeholder="New Meaning">
+        <button id="addBtn">Add</button>
+    </div>
+    <table id="vocabTable">
+        <thead>
+            <tr>
+                <th>Word</th>
+                <th>Meaning</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        async function fetchVocabulary() {
+            const response = await fetch('fetch_vocabulary.php');
+            const data = await response.json();
+            return data.reverse(); // Reverse the array to show recent items first
+        }
+
+        async function saveVocabulary(action, word, meaning, id = null) {
+            await fetch('save_vocabulary.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action, word, meaning, id })
+            });
+        }
+
+        function renderTable(vocabList) {
+            const tbody = document.querySelector('#vocabTable tbody');
+            tbody.innerHTML = '';
+            vocabList.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.word}</td>
+                    <td>${item.meaning}</td>
+                    <td>
+                        <button class="editBtn" data-id="${item.id}">Edit</button>
+                        <button class="deleteBtn" data-id="${item.id}">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll('.deleteBtn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.getAttribute('data-id');
+                    await saveVocabulary('delete', '', '', id);
+                    init();
+                });
+            });
+
+            document.querySelectorAll('.editBtn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const id = btn.getAttribute('data-id');
+                    const word = prompt('Edit Word:');
+                    const meaning = prompt('Edit Meaning:');
+                    if (word && meaning) {
+                        await saveVocabulary('edit', word, meaning, id);
+                        init();
+                    }
+                });
+            });
+        }
+
+        async function init() {
+            const vocabList = await fetchVocabulary();
+            renderTable(vocabList);
+        }
+
+        document.getElementById('addBtn').addEventListener('click', async () => {
+            const word = document.getElementById('newWord').value.trim();
+            const meaning = document.getElementById('newMeaning').value.trim();
+            if (word && meaning) {
+                await saveVocabulary('add', word, meaning);
+                document.getElementById('newWord').value = '';
+                document.getElementById('newMeaning').value = '';
+                document.getElementById('newWord').focus();
+                init();
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                document.getElementById('addBtn').click();
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
