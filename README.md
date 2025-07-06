@@ -1,182 +1,139 @@
-# My Playground 🎮
+# My Playground - PHP Web Application
 
-개인 학습 및 실험을 위한 멀티 모듈 웹 애플리케이션입니다.
+[![PHP Version](https://img.shields.io/badge/PHP-8.0+-blue.svg)](https://php.net)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![GitHub](https://img.shields.io/badge/GitHub-huntkil%2Fmy__new-brightgreen.svg)](https://github.com/huntkil/my_new)
 
-## 📋 프로젝트 개요
+A comprehensive PHP web application featuring learning modules, management tools, and utility functions. Built with modern PHP practices, secure credential management, and responsive design.
 
-**My Playground**는 PHP 기반의 웹 애플리케이션으로, 다양한 학습 도구와 유틸리티를 제공합니다.
+## 🌟 Features
 
-- **플랫폼**: PHP 8+ / MySQL(MariaDB)
-- **호스팅**: 카페24 호스팅 (gukho.net)
-- **환경**: HTTP (비SSL)
+### 📚 Learning Modules
+- **Card Slideshow**: Interactive word learning with animal images
+- **Vocabulary Management**: CRUD operations for word lists
+- **Word Visualization**: English/Korean word display systems
+- **Word Rolls**: SNS-style word presentation
 
-## 🌟 주요 기능
+### 🗂️ Management Modules
+- **CRUD Demo**: MVC pattern-based data management
+- **Health Tracking**: Personal health record management
+- **User Authentication**: Secure login/logout system
 
-### 📚 학습 도구
-- **단어 학습 시스템** (`card/`, `voca/`): 동물 이미지를 활용한 단어카드 및 단어장 관리
-- **박스 호흡 트레이너** (`box/`): 4-4-4-4 호흡 패턴 가이드
-- **단어 롤 시스템** (`inst/`): SNS 스타일 단어 표시
+### 🛠️ Tools Modules
+- **News Search**: Real-time news API integration
+- **Box Breathing**: Guided breathing exercise tool
+- **Family Tour**: Travel planning with interactive maps
 
-### 🗂️ 데이터 관리
-- **CRUD 데모** (`crud/`): MVC 패턴 기반 개인정보 관리
-- **건강 관리** (`myhealth/`): 운동 기록 관리 (로그인 필요)
+## 🚀 Quick Start
 
-### 🔍 정보 검색
-- **뉴스 검색** (`news/`): News API 연동 국가별 뉴스 검색
+### Prerequisites
+- PHP 8.0 or higher
+- Web server (Apache/Nginx) or PHP built-in server
+- SQLite (for local development) or MySQL
 
-### 🎯 기타 도구
-- **가족 여행 플래너** (`tour/`): 경주 4일 여행 계획
-- **문서 뷰어** (`docs/`): 문서 관리 시스템
+### Installation
 
-## 🏗️ 프로젝트 구조
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/huntkil/my_new.git
+   cd my_new
+   ```
+
+2. **Set up credentials**
+   ```bash
+   cd config/credentials
+   cp sample.php development.php
+   # Edit development.php with your actual credentials
+   ```
+
+3. **Start the development server**
+   ```bash
+   php -S localhost:8080
+   ```
+
+4. **Access the application**
+   ```
+   http://localhost:8080
+   ```
+
+## 📁 Project Structure
 
 ```
-my_www/
-├── 📁 modules/            # 주요 기능 모듈들
-│   ├── learning/          # 학습 관련 (card, voca, inst)
-│   ├── management/        # 데이터 관리 (crud, myhealth)  
-│   └── tools/             # 도구들 (news, tour, box)
-├── 📁 system/             # 시스템 관리
-│   ├── admin/             # 관리자 도구
-│   ├── includes/          # 공통 PHP 클래스
-│   └── auth/              # 사용자 인증 (구 login)
-├── 📁 resources/          # 리소스 파일들
-│   ├── assets/            # 공통 리소스 (이미지, 파일)
-│   ├── css/               # 전역 스타일시트
-│   └── uploads/           # 업로드 파일
-├── 📁 config/             # 설정 및 관리
-│   ├── deploy/            # 배포 도구
-│   └── logs/              # 로그 파일
-├── 📁 docs/               # 문서 시스템
-├── 📄 index.html          # 메인 페이지
-├── 📄 database_schema.sql # 데이터베이스 스키마
-└── 📄 .htaccess           # 보안 설정
+my_new/
+├── 📁 config/                 # Configuration files
+│   ├── 📁 credentials/        # Secure credential management
+│   └── 📁 deploy/            # Deployment scripts
+├── 📁 modules/               # Application modules
+│   ├── 📁 learning/          # Learning tools
+│   ├── 📁 management/        # Data management
+│   └── 📁 tools/             # Utility tools
+├── 📁 system/                # Core system files
+│   ├── 📁 admin/             # Admin functions
+│   ├── 📁 auth/              # Authentication
+│   └── 📁 includes/          # Core includes
+├── 📁 resources/             # Static resources
+└── 📄 README.md              # This file
 ```
 
-## 🚀 시작하기
+## 🔐 Security Features
 
-### 로컬 환경 설정
-```bash
-# 1. 프로젝트 클론
-git clone <repository-url>
-cd my_www
+- **Credential Management**: Secure separation of sensitive data
+- **Session Security**: Enhanced session handling with security measures
+- **Input Validation**: Comprehensive input sanitization
+- **SQL Injection Prevention**: Prepared statements throughout
+- **XSS Protection**: Output encoding and validation
 
-# 2. 웹 서버 설정 (XAMPP, WAMP, MAMP 등)
-# 3. 데이터베이스 설정
-mysql -u root -p < database_schema.sql
+## 🛠️ Development
 
-# 4. 환경 설정
-# includes/config.php 파일에서 데이터베이스 정보 확인
-```
+### Environment Setup
+The application automatically detects the environment:
+- **Development**: `localhost`, `127.0.0.1`, port `8080`
+- **Production**: All other environments
 
-### 배포 환경 설정
-자세한 배포 가이드는 [README_SETUP.md](README_SETUP.md)를 참고하세요.
+### Database Configuration
+- **Development**: SQLite (automatic setup)
+- **Production**: MySQL/MariaDB
 
-## 🔐 보안 기능
+### API Integration
+- **News API**: Real-time news data
+- **OpenAI API**: AI-powered features (optional)
 
-- **비밀번호 해싱**: `password_hash()` 사용
-- **세션 보안**: IP/User Agent 검증, 자동 재생성
-- **로그인 보안**: 계정 잠금 (5회 실패 시 30분)
-- **파일 보안**: `.htaccess`로 민감한 파일 접근 차단
-- **SQL 인젝션 방지**: Prepared Statements 사용
+## 📖 Documentation
 
-## 📊 시스템 모니터링
+- [Setup Guide](README_SETUP.md) - Detailed installation instructions
+- [Module Guide](docs/guides/MODULE_GUIDE.md) - Module-specific documentation
+- [Testing Report](TESTING_REPORT.md) - Comprehensive testing results
 
-- **시스템 상태 확인**: `/system/admin/system_check.php`
-- **에러 로그**: `/config/logs/error.log`
-- **활동 로그**: 데이터베이스 `system_logs` 테이블
+## 🤝 Contributing
 
-## 🛠️ 기술 스택
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Backend
-- **PHP**: 8.0+
-- **데이터베이스**: MySQL/MariaDB
-- **세션**: PHP 세션 + 보안 강화
+## 📝 License
 
-### Frontend
-- **HTML5**: 시맨틱 마크업
-- **CSS3**: 다크 모드 지원
-- **JavaScript**: 바닐라 JS + 비동기 처리
-- **Framework**: Tailwind CSS (일부 모듈)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### 보안
-- **인증**: 커스텀 세션 관리
-- **권한**: 역할 기반 접근 제어
-- **데이터 검증**: 입력 검증 및 필터링
+## 🙏 Acknowledgments
 
-## 📝 모듈별 상세 정보
+- [NewsAPI.org](https://newsapi.org/) for news data
+- [OpenAI](https://openai.com/) for AI capabilities
+- [Tailwind CSS](https://tailwindcss.com/) for styling
+- [Lucide Icons](https://lucide.dev/) for beautiful icons
 
-### 📚 학습 모듈 (`modules/learning/`)
-#### 🎴 단어카드 시스템 (`card/`)
-- 50개 동물 이미지 활용
-- 영어/한국어 시각화
-- 슬라이드쇼 기능
-- CSV 데이터 관리
+## 📞 Support
 
-#### 📖 단어장 관리 (`voca/`)
-- 실시간 CRUD 기능
-- 단어 검색 및 필터링
-- 학습 진도 관리
-
-#### 🎯 단어 롤 (`inst/`)
-- SNS 스타일 단어 표시
-- 동적 컨텐츠 로딩
-
-### 🗂️ 관리 모듈 (`modules/management/`)
-#### 🗃️ CRUD 시스템 (`crud/`)
-- MVC 패턴 구현
-- 개인정보 관리
-- 다크 모드 지원
-- 페이지네이션
-
-#### 💪 건강 관리 (`myhealth/`)
-- 운동 기록 관리
-- 로그인 기반 개인화
-- 날짜별 기록 조회
-- 통계 기능
-
-### 🛠️ 도구 모듈 (`modules/tools/`)
-#### 📰 뉴스 검색 (`news/`)
-- News API 연동
-- 국가별 뉴스 검색
-- 반응형 디자인
-- 이미지 최적화
-
-#### 🗺️ 여행 플래너 (`tour/`)
-- 경주 4일 여행 계획
-- 인터랙티브 지도
-- 관광지 정보
-
-#### 🧘 박스 호흡 (`box/`)
-- 4-4-4-4 호흡 패턴
-- 시각적 가이드
-- 타이머 기능
-
-## 📞 지원 및 문의
-
-- **이메일**: 프로젝트 관련 문의
-- **GitHub Issues**: 버그 리포트 및 기능 요청
-- **카페24 지원**: 1588-5835 (호스팅 관련)
-
-## 📄 라이센스
-
-이 프로젝트는 개인 학습 목적으로 제작되었습니다.
+For support and questions:
+- Create an [issue](https://github.com/huntkil/my_new/issues)
+- Check the [documentation](docs/)
+- Review the [setup guide](README_SETUP.md)
 
 ---
 
-**🎯 개발자 노트**
-- 지속적인 학습과 실험을 위한 플레이그라운드
-- 실무 기술 스택 적용 및 테스트
-- 카페24 호스팅 환경 최적화 완료
-- HTTP 환경에서 안전한 운영 보장
+**Made with ❤️ by [huntkil](https://github.com/huntkil)**
 
-**📊 프로젝트 현황**
-- ✅ 기본 기능 구현 완료
-- ✅ 카페24 호스팅 최적화 완료
-- ✅ 보안 강화 완료
-- ✅ 문서화 완료
-- 🔄 지속적인 개선 진행 중
-
----
-
-> **"학습은 끝이 없다"** - 지속적인 성장과 발전을 위한 개인 프로젝트 
+[![GitHub stars](https://img.shields.io/github/stars/huntkil/my_new?style=social)](https://github.com/huntkil/my_new/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/huntkil/my_new?style=social)](https://github.com/huntkil/my_new/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/huntkil/my_new)](https://github.com/huntkil/my_new/issues) 
