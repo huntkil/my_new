@@ -9,10 +9,11 @@ define('CONFIG_LOADED', true);
 require_once __DIR__ . '/../../config/credentials/loader.php';
 
 // Environment Detection
+$serverName = $_SERVER['SERVER_NAME'] ?? '';
 $isLocal = (
-    $_SERVER['SERVER_NAME'] === 'localhost' ||
-    $_SERVER['SERVER_NAME'] === '127.0.0.1' ||
-    strpos($_SERVER['SERVER_NAME'], 'localhost') !== false
+    $serverName === 'localhost' ||
+    $serverName === '127.0.0.1' ||
+    strpos($serverName, 'localhost') !== false
 );
 
 // Database Configuration from credentials

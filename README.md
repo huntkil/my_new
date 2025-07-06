@@ -1,139 +1,170 @@
-# My Playground - PHP Web Application
+# My Playground
 
-[![PHP Version](https://img.shields.io/badge/PHP-8.0+-blue.svg)](https://php.net)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![GitHub](https://img.shields.io/badge/GitHub-huntkil%2Fmy__new-brightgreen.svg)](https://github.com/huntkil/my_new)
+A comprehensive web development playground featuring various learning tools, management systems, and utilities built with PHP, HTML, CSS, and JavaScript.
 
-A comprehensive PHP web application featuring learning modules, management tools, and utility functions. Built with modern PHP practices, secure credential management, and responsive design.
+## 🚀 Features
 
-## 🌟 Features
+### Learning Modules
+- **Card Slideshow**: Interactive word visualization with image cards
+- **Vocabulary Manager**: Modern vocabulary learning tool with search, sorting, and statistics
+- **Word Visualization**: English and Korean word display tools
 
-### 📚 Learning Modules
-- **Card Slideshow**: Interactive word learning with animal images
-- **Vocabulary Management**: CRUD operations for word lists
-- **Word Visualization**: English/Korean word display systems
-- **Word Rolls**: SNS-style word presentation
+### Management Tools
+- **CRUD Demo**: Complete Create, Read, Update, Delete operations
+- **My Health**: Personal health information tracking
+- **User Management**: Secure login system with session management
 
-### 🗂️ Management Modules
-- **CRUD Demo**: MVC pattern-based data management
-- **Health Tracking**: Personal health record management
-- **User Authentication**: Secure login/logout system
+### Utility Tools
+- **News Search**: Real-time news article search
+- **Family Tour**: Interactive Gyeongju tour guide
+- **Box Breathing**: Relaxation and breathing exercise tool
 
-### 🛠️ Tools Modules
-- **News Search**: Real-time news API integration
-- **Box Breathing**: Guided breathing exercise tool
-- **Family Tour**: Travel planning with interactive maps
+## 🏗️ Architecture
 
-## 🚀 Quick Start
+### Unified Layout System
+The application uses a centralized `Layout` class (`system/includes/components/Layout.php`) that provides:
+- Consistent header and footer across all pages
+- Dark mode toggle with localStorage persistence
+- Responsive navigation
+- Unified styling with Tailwind CSS and ShadCN components
+
+### File Structure
+```
+my_www/
+├── index.php                    # Main homepage
+├── system/
+│   ├── includes/
+│   │   ├── components/
+│   │   │   ├── Layout.php      # Unified layout system
+│   │   │   ├── Form.php        # Form components
+│   │   │   └── ...
+│   │   ├── config.php          # Configuration loader
+│   │   └── Database.php        # Database abstraction
+│   └── auth/                   # Authentication system
+├── modules/
+│   ├── learning/               # Educational tools
+│   │   ├── voca/              # Vocabulary management
+│   │   └── card/              # Card slideshow
+│   ├── management/            # Data management tools
+│   └── tools/                 # Utility applications
+├── config/
+│   └── credentials/           # Secure credential storage
+└── resources/                 # Static assets
+```
+
+## 🎨 Design System
+
+### Modern UI/UX
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Dark Mode**: System-wide theme toggle with smooth transitions
+- **Component Library**: ShadCN-inspired components for consistency
+- **Interactive Elements**: Hover effects, animations, and micro-interactions
+
+### Color Scheme
+- **Light Theme**: Clean whites and grays with blue accents
+- **Dark Theme**: Deep grays with blue highlights
+- **Gradient Backgrounds**: Subtle gradients for visual appeal
+
+## 🔧 Setup & Installation
 
 ### Prerequisites
 - PHP 8.0 or higher
+- SQLite (included) or MySQL
 - Web server (Apache/Nginx) or PHP built-in server
-- SQLite (for local development) or MySQL
 
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/huntkil/my_new.git
-   cd my_new
-   ```
-
-2. **Set up credentials**
-   ```bash
-   cd config/credentials
-   cp sample.php development.php
-   # Edit development.php with your actual credentials
-   ```
-
-3. **Start the development server**
+### Quick Start
+1. Clone the repository
+2. Navigate to the project directory
+3. Start the development server:
    ```bash
    php -S localhost:8080
    ```
+4. Open `http://localhost:8080` in your browser
 
-4. **Access the application**
-   ```
-   http://localhost:8080
-   ```
+### Configuration
+1. Copy `config/credentials/development.example.php` to `config/credentials/development.php`
+2. Update database credentials and API keys
+3. Ensure the `config/credentials/` directory is excluded from version control
 
-## 📁 Project Structure
+## 📱 Pages Overview
 
-```
-my_new/
-├── 📁 config/                 # Configuration files
-│   ├── 📁 credentials/        # Secure credential management
-│   └── 📁 deploy/            # Deployment scripts
-├── 📁 modules/               # Application modules
-│   ├── 📁 learning/          # Learning tools
-│   ├── 📁 management/        # Data management
-│   └── 📁 tools/             # Utility tools
-├── 📁 system/                # Core system files
-│   ├── 📁 admin/             # Admin functions
-│   ├── 📁 auth/              # Authentication
-│   └── 📁 includes/          # Core includes
-├── 📁 resources/             # Static resources
-└── 📄 README.md              # This file
-```
+### Main Pages
+- **Home** (`index.php`): Central hub with all module links
+- **Vocabulary** (`modules/learning/voca/voca.html`): Modern vocabulary manager
+- **Card Slideshow** (`modules/learning/card/slideshow.php`): Interactive word cards
 
-## 🔐 Security Features
+### Management Pages
+- **CRUD Demo** (`modules/management/crud/data_list.php`): Database operations
+- **My Health** (`modules/management/myhealth/health_list.php`): Health tracking
 
-- **Credential Management**: Secure separation of sensitive data
-- **Session Security**: Enhanced session handling with security measures
-- **Input Validation**: Comprehensive input sanitization
-- **SQL Injection Prevention**: Prepared statements throughout
-- **XSS Protection**: Output encoding and validation
+### Tool Pages
+- **News Search** (`modules/tools/news/search_news_form.php`): News exploration
+- **Family Tour** (`modules/tools/tour/familytour.html`): Tour guide
+- **Box Breathing** (`modules/tools/box/boxbreathe.php`): Relaxation tool
+
+## 🔒 Security Features
+
+### Credential Management
+- Secure credential storage in `config/credentials/`
+- Environment-specific configuration files
+- Git-ignored sensitive data
+
+### Authentication
+- Session-based user authentication
+- Secure login/logout system
+- Protected private sections
 
 ## 🛠️ Development
 
-### Environment Setup
-The application automatically detects the environment:
-- **Development**: `localhost`, `127.0.0.1`, port `8080`
-- **Production**: All other environments
+### Adding New Pages
+1. Create your page content
+2. Use the Layout class for consistent styling:
+   ```php
+   require_once './system/includes/components/Layout.php';
+   
+   $content = 'Your page content here';
+   
+   $layout = new Layout([
+       'pageTitle' => 'Your Page Title',
+       'additionalCSS' => 'Custom styles if needed'
+   ]);
+   
+   $layout->render($content);
+   ```
 
-### Database Configuration
-- **Development**: SQLite (automatic setup)
-- **Production**: MySQL/MariaDB
+### Database Operations
+Use the Database class for all database interactions:
+```php
+require_once './system/includes/Database.php';
+$db = new Database();
+$result = $db->query("SELECT * FROM your_table");
+```
 
-### API Integration
-- **News API**: Real-time news data
-- **OpenAI API**: AI-powered features (optional)
+## 📊 Testing
 
-## 📖 Documentation
-
-- [Setup Guide](README_SETUP.md) - Detailed installation instructions
-- [Module Guide](docs/guides/MODULE_GUIDE.md) - Module-specific documentation
-- [Testing Report](TESTING_REPORT.md) - Comprehensive testing results
+### Test Setup
+- Run `./start_test.sh` for automated testing
+- Check `TEST_GUIDE.md` for detailed testing procedures
+- Review `FINAL_TEST_SUMMARY.md` for test results
 
 ## 🤝 Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Follow the established code structure
+2. Use the Layout class for new pages
+3. Maintain consistent styling with Tailwind CSS
+4. Test thoroughly before submitting changes
 
-## 📝 License
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## 🆘 Support
 
-- [NewsAPI.org](https://newsapi.org/) for news data
-- [OpenAI](https://openai.com/) for AI capabilities
-- [Tailwind CSS](https://tailwindcss.com/) for styling
-- [Lucide Icons](https://lucide.dev/) for beautiful icons
-
-## 📞 Support
-
-For support and questions:
-- Create an [issue](https://github.com/huntkil/my_new/issues)
-- Check the [documentation](docs/)
-- Review the [setup guide](README_SETUP.md)
+For issues and questions:
+1. Check the documentation in the `docs/` directory
+2. Review the test guides for troubleshooting
+3. Examine the configuration files for setup issues
 
 ---
 
-**Made with ❤️ by [huntkil](https://github.com/huntkil)**
-
-[![GitHub stars](https://img.shields.io/github/stars/huntkil/my_new?style=social)](https://github.com/huntkil/my_new/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/huntkil/my_new?style=social)](https://github.com/huntkil/my_new/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/huntkil/my_new)](https://github.com/huntkil/my_new/issues) 
+**My Playground** - A comprehensive web development learning environment 

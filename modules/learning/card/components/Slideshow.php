@@ -33,11 +33,13 @@ class Slideshow {
         $html = '<div class="container mx-auto px-4 py-8">';
         $html .= '<div class="max-w-2xl mx-auto space-y-8">';
         
-        // Back button
-        $html .= '<a href="../index.html" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">';
+        // Header with back button
+        $html .= '<div class="flex items-center justify-between mb-6">';
+        $html .= '<a href="../../../index.php" class="inline-flex items-center gap-2 text-sm font-medium hover:text-primary transition-colors">';
         $html .= '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>';
         $html .= 'Back to Home';
         $html .= '</a>';
+        $html .= '</div>';
 
         // Slideshow container
         $html .= '<div class="bg-card text-card-foreground rounded-lg border p-6 space-y-6">';

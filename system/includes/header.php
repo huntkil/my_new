@@ -98,6 +98,7 @@ if (!isset($page_title)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : ''; ?>My Playground</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
         // Development environment - CDN usage is acceptable
         tailwind.config = {
@@ -275,12 +276,7 @@ if (!isset($page_title)) {
                 <div class="flex items-center gap-2">
                     <!-- Theme Toggle -->
                     <button id="theme-toggle" class="p-2 rounded-lg hover:bg-accent transition-colors" title="Toggle theme">
-                        <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                        </svg>
-                        <svg id="theme-toggle-light-icon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 2L13.09 8.26L20 9L14 14.74L15.18 21.02L10 17.77L4.82 21.02L6 14.74L0 9L6.91 8.26L10 2Z"></path>
-                        </svg>
+                        <i id="theme-toggle-icon" class="fas fa-moon text-lg"></i>
                     </button>
 
                     <!-- User Menu -->
@@ -361,19 +357,18 @@ if (!isset($page_title)) {
     <script>
         // Theme toggle functionality
         const themeToggle = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeIcon = document.getElementById('theme-toggle-icon');
 
         // Check for saved theme preference or default to light mode
         const currentTheme = localStorage.getItem('theme') || 'light';
         
         if (currentTheme === 'dark') {
             document.documentElement.classList.add('dark');
-            darkIcon.classList.remove('hidden');
-            lightIcon.classList.add('hidden');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
         } else {
-            darkIcon.classList.add('hidden');
-            lightIcon.classList.remove('hidden');
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
         }
 
         themeToggle.addEventListener('click', function() {
@@ -381,12 +376,12 @@ if (!isset($page_title)) {
             
             if (document.documentElement.classList.contains('dark')) {
                 localStorage.setItem('theme', 'dark');
-                darkIcon.classList.remove('hidden');
-                lightIcon.classList.add('hidden');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
             } else {
                 localStorage.setItem('theme', 'light');
-                darkIcon.classList.add('hidden');
-                lightIcon.classList.remove('hidden');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
             }
         });
 

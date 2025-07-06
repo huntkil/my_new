@@ -1,103 +1,270 @@
 <?php
 class Layout {
-    public static function header($title, $backUrl = null) {
-        $html = "<div class='flex justify-between items-center mb-6'>";
-        $html .= "<h1 class='text-3xl font-bold'>$title</h1>";
-        
-        if ($backUrl) {
-            $html .= "<a href='$backUrl' class='btn btn-outline'>";
-            $html .= "<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 mr-2' viewBox='0 0 20 20' fill='currentColor'>";
-            $html .= "<path fill-rule='evenodd' d='M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z' clip-rule='evenodd' />";
-            $html .= "</svg>";
-            $html .= "Back to List";
-            $html .= "</a>";
+    private $pageTitle;
+    private $additionalCSS;
+    private $additionalJS;
+    private $showHeader;
+    private $showFooter;
+    private $showNavigation;
+    private $customBackground;
+    
+    public function __construct($options = []) {
+        $this->pageTitle = $options['pageTitle'] ?? 'My Playground';
+        $this->additionalCSS = $options['additionalCSS'] ?? '';
+        $this->additionalJS = $options['additionalJS'] ?? '';
+        $this->showHeader = $options['showHeader'] ?? true;
+        $this->showFooter = $options['showFooter'] ?? true;
+        $this->showNavigation = $options['showNavigation'] ?? true;
+        $this->customBackground = $options['customBackground'] ?? '';
+    }
+    
+    public function renderHeader() {
+        $html = '<!DOCTYPE html>';
+        $html .= '<html lang="ko" class="h-full">';
+        $html .= '<head>';
+        $html .= '<meta charset="UTF-8">';
+        $html .= '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+        $html .= '<title>' . htmlspecialchars($this->pageTitle) . ' - My Playground</title>';
+        $html .= '<script src="https://cdn.tailwindcss.com"></script>';
+        $html .= '<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">';
+        $html .= '<script>';
+        $html .= 'tailwind.config = {';
+        $html .= '  darkMode: "class",';
+        $html .= '  theme: {';
+        $html .= '    extend: {';
+        $html .= '      colors: {';
+        $html .= '        border: "hsl(var(--border))",';
+        $html .= '        input: "hsl(var(--input))",';
+        $html .= '        ring: "hsl(var(--ring))",';
+        $html .= '        background: "hsl(var(--background))",';
+        $html .= '        foreground: "hsl(var(--foreground))",';
+        $html .= '        primary: {';
+        $html .= '          DEFAULT: "hsl(var(--primary))",';
+        $html .= '          foreground: "hsl(var(--primary-foreground))",';
+        $html .= '        },';
+        $html .= '        secondary: {';
+        $html .= '          DEFAULT: "hsl(var(--secondary))",';
+        $html .= '          foreground: "hsl(var(--secondary-foreground))",';
+        $html .= '        },';
+        $html .= '        destructive: {';
+        $html .= '          DEFAULT: "hsl(var(--destructive))",';
+        $html .= '          foreground: "hsl(var(--destructive-foreground))",';
+        $html .= '        },';
+        $html .= '        muted: {';
+        $html .= '          DEFAULT: "hsl(var(--muted))",';
+        $html .= '          foreground: "hsl(var(--muted-foreground))",';
+        $html .= '        },';
+        $html .= '        accent: {';
+        $html .= '          DEFAULT: "hsl(var(--accent))",';
+        $html .= '          foreground: "hsl(var(--accent-foreground))",';
+        $html .= '        },';
+        $html .= '        popover: {';
+        $html .= '          DEFAULT: "hsl(var(--popover))",';
+        $html .= '          foreground: "hsl(var(--popover-foreground))",';
+        $html .= '        },';
+        $html .= '        card: {';
+        $html .= '          DEFAULT: "hsl(var(--card))",';
+        $html .= '          foreground: "hsl(var(--card-foreground))",';
+        $html .= '        },';
+        $html .= '      },';
+        $html .= '    }';
+        $html .= '  }';
+        $html .= '}';
+        $html .= '</script>';
+        $html .= '<style>';
+        $html .= ':root {';
+        $html .= '  --background: 0 0% 100%;';
+        $html .= '  --foreground: 222.2 84% 4.9%;';
+        $html .= '  --card: 0 0% 100%;';
+        $html .= '  --card-foreground: 222.2 84% 4.9%;';
+        $html .= '  --popover: 0 0% 100%;';
+        $html .= '  --popover-foreground: 222.2 84% 4.9%;';
+        $html .= '  --primary: 222.2 47.4% 11.2%;';
+        $html .= '  --primary-foreground: 210 40% 98%;';
+        $html .= '  --secondary: 210 40% 96%;';
+        $html .= '  --secondary-foreground: 222.2 84% 4.9%;';
+        $html .= '  --muted: 210 40% 96%;';
+        $html .= '  --muted-foreground: 215.4 16.3% 46.9%;';
+        $html .= '  --accent: 210 40% 96%;';
+        $html .= '  --accent-foreground: 222.2 84% 4.9%;';
+        $html .= '  --destructive: 0 84.2% 60.2%;';
+        $html .= '  --destructive-foreground: 210 40% 98%;';
+        $html .= '  --border: 214.3 31.8% 91.4%;';
+        $html .= '  --input: 214.3 31.8% 91.4%;';
+        $html .= '  --ring: 222.2 84% 4.9%;';
+        $html .= '}';
+        $html .= '.dark {';
+        $html .= '  --background: 222.2 84% 4.9%;';
+        $html .= '  --foreground: 210 40% 98%;';
+        $html .= '  --card: 222.2 84% 4.9%;';
+        $html .= '  --card-foreground: 210 40% 98%;';
+        $html .= '  --popover: 222.2 84% 4.9%;';
+        $html .= '  --popover-foreground: 210 40% 98%;';
+        $html .= '  --primary: 210 40% 98%;';
+        $html .= '  --primary-foreground: 222.2 47.4% 11.2%;';
+        $html .= '  --secondary: 217.2 32.6% 17.5%;';
+        $html .= '  --secondary-foreground: 210 40% 98%;';
+        $html .= '  --muted: 217.2 32.6% 17.5%;';
+        $html .= '  --muted-foreground: 215 20.2% 65.1%;';
+        $html .= '  --accent: 217.2 32.6% 17.5%;';
+        $html .= '  --accent-foreground: 210 40% 98%;';
+        $html .= '  --destructive: 0 62.8% 30.6%;';
+        $html .= '  --destructive-foreground: 210 40% 98%;';
+        $html .= '  --border: 217.2 32.6% 17.5%;';
+        $html .= '  --input: 217.2 32.6% 17.5%;';
+        $html .= '  --ring: 212.7 26.8% 83.9%;';
+        $html .= '}';
+        $html .= '.gradient-bg {';
+        $html .= '  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);';
+        $html .= '}';
+        $html .= '.dark .gradient-bg {';
+        $html .= '  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);';
+        $html .= '}';
+        $html .= '.card-hover {';
+        $html .= '  transition: all 0.3s ease;';
+        $html .= '}';
+        $html .= '.card-hover:hover {';
+        $html .= '  transform: translateY(-5px);';
+        $html .= '  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);';
+        $html .= '}';
+        $html .= '.mobile-menu-hidden {';
+        $html .= '  transform: translateX(-100%);';
+        $html .= '}';
+        $html .= '.mobile-menu-visible {';
+        $html .= '  transform: translateX(0);';
+        $html .= '}';
+        $html .= '.breadcrumb-separator::before {';
+        $html .= '  content: "/";';
+        $html .= '  margin: 0 0.5rem;';
+        $html .= '  color: hsl(var(--muted-foreground));';
+        $html .= '}';
+        $html .= '</style>';
+        if ($this->additionalCSS) {
+            $html .= $this->additionalCSS;
         }
+        $html .= '</head>';
         
-        $html .= "</div>";
+        // Body with custom background if specified
+        $bodyClass = 'bg-background text-foreground min-h-screen flex flex-col';
+        if ($this->customBackground) {
+            $bodyClass .= ' ' . $this->customBackground;
+        }
+        $html .= '<body class="' . $bodyClass . '">';
+        
         return $html;
     }
-
-    public static function alert($type, $message) {
-        $class = $type === 'success' ? 'alert-success' : 'alert-error';
-        return "<div class='alert $class mb-6'>$message</div>";
+    
+    public function renderNavigation() {
+        if (!$this->showNavigation) {
+            return '';
+        }
+        
+        $html = '<nav class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">';
+        $html .= '<div class="container mx-auto px-4">';
+        $html .= '<div class="flex h-16 items-center justify-between">';
+        
+        // Logo
+        $html .= '<div class="flex items-center gap-4">';
+        $html .= '<a href="/index.php" class="font-bold text-xl">My Playground</a>';
+        $html .= '</div>';
+        
+        // Desktop Navigation
+        $html .= '<div class="hidden md:flex items-center gap-6">';
+        $html .= '<a href="/modules/learning/card/slideshow.php" class="text-sm font-medium hover:text-primary transition-colors">Learning</a>';
+        $html .= '<a href="/modules/tools/news/search_news_form.php" class="text-sm font-medium hover:text-primary transition-colors">Tools</a>';
+        $html .= '<a href="/modules/management/crud/data_list.php" class="text-sm font-medium hover:text-primary transition-colors">Management</a>';
+        $html .= '</div>';
+        
+        // Action Buttons
+        $html .= '<div class="flex items-center gap-2">';
+        $html .= '<button id="theme-toggle" class="p-2 rounded-lg hover:bg-accent transition-colors" title="Toggle theme">';
+        $html .= '<i id="theme-toggle-icon" class="fas fa-moon text-lg"></i>';
+        $html .= '</button>';
+        $html .= '<a href="/index.php" class="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium">Home</a>';
+        $html .= '</div>';
+        
+        $html .= '</div>'; // End flex container
+        $html .= '</div>'; // End container
+        $html .= '</nav>';
+        
+        return $html;
     }
-
-    public static function card($content) {
-        $html = "<div class='card'>";
-        $html .= "<div class='card-content'>";
+    
+    public function renderFooter() {
+        if (!$this->showFooter) {
+            return '';
+        }
+        
+        $html = '<footer class="border-t mt-auto">';
+        $html .= '<div class="container mx-auto px-4 py-6">';
+        $html .= '<div class="flex flex-col md:flex-row justify-between items-center gap-4">';
+        $html .= '<p class="text-sm text-muted-foreground">&copy; ' . date('Y') . ' My Playground. All rights reserved.</p>';
+        $html .= '<div class="flex items-center gap-4 text-sm text-muted-foreground">';
+        $html .= '<a href="/index.php" class="hover:text-foreground transition-colors">Home</a>';
+        $html .= '<a href="/modules/learning/voca/voca.html" class="hover:text-foreground transition-colors">Vocabulary</a>';
+        $html .= '<a href="/modules/learning/card/slideshow.php" class="hover:text-foreground transition-colors">Cards</a>';
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '</div>';
+        $html .= '</footer>';
+        
+        return $html;
+    }
+    
+    public function renderThemeScript() {
+        $html = '<script>';
+        $html .= '(function() {';
+        $html .= '  const initTheme = () => {';
+        $html .= '    const themeToggle = document.getElementById("theme-toggle");';
+        $html .= '    const themeIcon = document.getElementById("theme-toggle-icon");';
+        $html .= '    const currentTheme = localStorage.getItem("theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");';
+        $html .= '    if (currentTheme === "dark") {';
+        $html .= '      document.documentElement.classList.add("dark");';
+        $html .= '      if (themeIcon) { themeIcon.classList.replace("fa-moon", "fa-sun"); }';
+        $html .= '    } else {';
+        $html .= '      document.documentElement.classList.remove("dark");';
+        $html .= '      if (themeIcon) { themeIcon.classList.replace("fa-sun", "fa-moon"); }';
+        $html .= '    }';
+        $html .= '    if (themeToggle) {';
+        $html .= '      themeToggle.addEventListener("click", () => {';
+        $html .= '        document.documentElement.classList.toggle("dark");';
+        $html .= '        const isDark = document.documentElement.classList.contains("dark");';
+        $html .= '        localStorage.setItem("theme", isDark ? "dark" : "light");';
+        $html .= '        if (themeIcon) {';
+        $html .= '          themeIcon.classList.toggle("fa-moon", !isDark);';
+        $html .= '          themeIcon.classList.toggle("fa-sun", isDark);';
+        $html .= '        }';
+        $html .= '      });';
+        $html .= '    }';
+        $html .= '  };';
+        $html .= '  if (document.readyState === "loading") {';
+        $html .= '    document.addEventListener("DOMContentLoaded", initTheme);';
+        $html .= '  } else { initTheme(); }';
+        $html .= '})();';
+        $html .= '</script>';
+        
+        if ($this->additionalJS) {
+            $html .= $this->additionalJS;
+        }
+        
+        return $html;
+    }
+    
+    public function renderClosing() {
+        $html = $this->renderThemeScript();
+        $html .= '</body>';
+        $html .= '</html>';
+        return $html;
+    }
+    
+    public function render($content) {
+        $html = $this->renderHeader();
+        $html .= $this->renderNavigation();
+        $html .= '<main class="flex-1">';
         $html .= $content;
-        $html .= "</div>";
-        $html .= "</div>";
-        return $html;
-    }
-
-    public static function table($headers, $rows, $actions = []) {
-        $html = "<div class='bg-card text-card-foreground rounded-lg border shadow-sm'>";
-        $html .= "<div class='overflow-x-auto'>";
-        $html .= "<table class='w-full'>";
-        
-        // Headers
-        $html .= "<thead><tr class='border-b bg-muted/50'>";
-        foreach ($headers as $header) {
-            $html .= "<th class='px-4 py-3 text-left font-medium'>$header</th>";
-        }
-        if (!empty($actions)) {
-            $html .= "<th class='px-4 py-3 text-left font-medium'>Actions</th>";
-        }
-        $html .= "</tr></thead>";
-        
-        // Body
-        $html .= "<tbody>";
-        if (empty($rows)) {
-            $colspan = count($headers) + (!empty($actions) ? 1 : 0);
-            $html .= "<tr><td colspan='$colspan' class='px-4 py-3 text-center text-muted-foreground'>No records found</td></tr>";
-        } else {
-            foreach ($rows as $row) {
-                $html .= "<tr class='border-b hover:bg-muted/50'>";
-                foreach ($row as $cell) {
-                    $html .= "<td class='px-4 py-3'>" . htmlspecialchars($cell) . "</td>";
-                }
-                
-                if (!empty($actions)) {
-                    $html .= "<td class='px-4 py-3'><div class='flex items-center gap-2'>";
-                    foreach ($actions as $action) {
-                        $url = str_replace(':id', $row['id'], $action['url']);
-                        $html .= "<a href='$url' class='{$action['class']}'>{$action['text']}</a>";
-                    }
-                    $html .= "</div></td>";
-                }
-                
-                $html .= "</tr>";
-            }
-        }
-        $html .= "</tbody>";
-        
-        $html .= "</table>";
-        $html .= "</div>";
-        $html .= "</div>";
-        
-        return $html;
-    }
-
-    public static function pagination($current, $total, $url) {
-        if ($total <= 1) return '';
-        
-        $html = "<div class='flex justify-center gap-2'>";
-        
-        if ($current > 1) {
-            $html .= "<a href='{$url}?page=" . ($current - 1) . "' class='btn btn-outline'>Previous</a>";
-        }
-        
-        for ($i = 1; $i <= $total; $i++) {
-            $class = $i === $current ? 'btn-primary' : 'btn-outline';
-            $html .= "<a href='{$url}?page=$i' class='btn $class'>$i</a>";
-        }
-        
-        if ($current < $total) {
-            $html .= "<a href='{$url}?page=" . ($current + 1) . "' class='btn btn-outline'>Next</a>";
-        }
-        
-        $html .= "</div>";
-        return $html;
+        $html .= '</main>';
+        $html .= $this->renderFooter();
+        $html .= $this->renderClosing();
+        echo $html;
     }
 } 
