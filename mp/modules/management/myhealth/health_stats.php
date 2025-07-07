@@ -185,10 +185,9 @@ function parseDate(
     }
     $timeData = $stmt->fetchAll();
     
-    // 최근 30일 연속 운동 확인
+    // 최근 30일 연속 운동 확인 (SQLite 호환)
     $streakQuery = "SELECT 
-        year, month, day,
-        ROW_NUMBER() OVER (ORDER BY year DESC, month DESC, day DESC) as rn
+        year, month, day
         FROM myhealth 
         ORDER BY year DESC, month DESC, day DESC";
     $streakResult = $db->query($streakQuery);
@@ -199,6 +198,30 @@ function parseDate(
     $maxStreak = 0;
     $tempStreak = 0;
     
+    // 오늘 날짜
+    $today = new DateTime();
+    $todayStr = $today->format('Y-m-d');
+    
+    // 연속 운동 계산
+    $expectedDate = clone $today;
+    $consecutiveDays = 0;
+    
+    foreach ($streakData as $record) {
+        $recordDate = new DateTime($record['year'] . '-' . $record['month'] . '-' . $record['day']);
+        $recordDateStr = $recordDate->format('Y-m-d');
+        
+        if ($recordDateStr == $expectedDate->format('Y-m-d')) {
+            $consecutiveDays++;
+            $expectedDate->modify('-1 day');
+        } else {
+            break;
+        }
+    }
+    
+    $currentStreak = $consecutiveDays;
+    
+    // 최대 연속 운동 계산
+    $tempStreak = 0;
     for ($i = 0; $i < count($streakData) - 1; $i++) {
         $current = $streakData[$i];
         $next = $streakData[$i + 1];
@@ -209,7 +232,6 @@ function parseDate(
         
         if ($diff == 1) {
             $tempStreak++;
-            if ($i == 0) $currentStreak = $tempStreak;
         } else {
             if ($tempStreak > $maxStreak) $maxStreak = $tempStreak;
             $tempStreak = 0;
