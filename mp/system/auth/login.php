@@ -4,7 +4,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once '../includes/config.php';
+// Production config 사용
+require_once '../includes/config_production.php';
 $page_title = "Login";
 include '../includes/header.php';
 ?>

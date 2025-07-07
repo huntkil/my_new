@@ -54,4 +54,19 @@ require_once __DIR__ . '/Utils.php';
 
 // Load constants
 require_once __DIR__ . '/constants.php';
+
+// Security Headers (PHP에서 설정)
+if (!headers_sent()) {
+    header('X-Content-Type-Options: nosniff');
+    header('X-Frame-Options: DENY');
+    header('X-XSS-Protection: 1; mode=block');
+    header('Referrer-Policy: strict-origin-when-cross-origin');
+}
+
+// PHP 설정 (cafe24 호환)
+ini_set('memory_limit', '128M');
+ini_set('max_execution_time', 30);
+ini_set('post_max_size', '8M');
+ini_set('upload_max_filesize', '5M');
+ini_set('max_file_uploads', 10);
 ?> 
