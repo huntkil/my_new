@@ -5,7 +5,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Main application entry point for /mp
-require_once __DIR__ . '/system/includes/config.php';
+// 호스팅 환경에서는 production config 사용
+if (file_exists(__DIR__ . '/system/includes/config_production.php')) {
+    require_once __DIR__ . '/system/includes/config_production.php';
+} else {
+    require_once __DIR__ . '/system/includes/config.php';
+}
 
 // Include header
 require_once __DIR__ . '/system/includes/header.php';
