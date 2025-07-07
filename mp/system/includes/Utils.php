@@ -312,7 +312,7 @@ class Utils {
     }
 
     public static function isAuthenticated() {
-        return isset($_SESSION['user_id']);
+        return isset($_SESSION['id']);
     }
 
     public static function requireAuth() {

@@ -154,8 +154,8 @@ try {
     error_log("Login successful for user: {$id} from IP: {$_SERVER['REMOTE_ADDR']}");
     error_log("Session data after login: " . print_r($_SESSION, true));
     
-    // 성공 페이지로 리다이렉트
-    header("Location: ../../index.php");
+    // 성공 페이지로 리다이렉트 (visual reading exercise로 이동)
+    header("Location: ../../modules/reading/exercises/visual_reading.php");
     exit;
     
 } catch (Exception $e) {

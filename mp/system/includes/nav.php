@@ -32,6 +32,10 @@ $nav = NavigationHelper::getInstance();
                    class="text-sm font-medium <?php echo strpos($current_page, 'crud') !== false ? 'text-primary' : 'text-muted-foreground hover:text-primary'; ?> transition-colors">
                     Management
                 </a>
+                <a href="<?php echo $nav->getModuleUrl('reading/ai_reading_coach.php'); ?>" 
+                   class="text-sm font-medium <?php echo strpos($current_page, 'reading') !== false ? 'text-primary' : 'text-muted-foreground hover:text-primary'; ?> transition-colors">
+                    Reading Coach
+                </a>
                 <?php if(isset($_SESSION['id'])): ?>
                     <a href="<?php echo $nav->getSystemUrl('auth/logout.php'); ?>" 
                        class="text-sm font-medium text-muted-foreground hover:text-destructive transition-colors">
@@ -51,6 +55,7 @@ $nav = NavigationHelper::getInstance();
             <a href="<?php echo $nav->getHomeUrl(); ?>" class="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Home</a>
             <a href="<?php echo $nav->getModuleUrl('learning/card/slideshow.php'); ?>" class="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Learning</a>
             <a href="<?php echo $nav->getModuleUrl('management/crud/data_list.php'); ?>" class="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Management</a>
+            <a href="<?php echo $nav->getModuleUrl('reading/ai_reading_coach.php'); ?>" class="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Reading Coach</a>
             <?php if(isset($_SESSION['id'])): ?>
                 <a href="<?php echo $nav->getSystemUrl('auth/logout.php'); ?>" class="block text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">Logout</a>
             <?php else: ?>

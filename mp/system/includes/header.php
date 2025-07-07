@@ -33,6 +33,10 @@ class NavigationHelper {
         return $this->rootPath . 'index.php';
     }
     
+    public function getRootUrl() {
+        return $this->rootPath;
+    }
+    
     public function getModuleUrl($path) {
         return $this->rootPath . 'modules/' . $path;
     }
@@ -102,9 +106,11 @@ if (!isset($page_title)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($pageTitle) ? htmlspecialchars($pageTitle) . ' - ' : ''; ?>My Playground</title>
-    <link href="/mp/resources/css/tailwind.output.css" rel="stylesheet">
+    <?php if (!isset($additional_css)): ?>
+    <link href="<?php echo $nav->getRootUrl(); ?>resources/css/tailwind.output.css" rel="stylesheet">
+    <?php endif; ?>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="/mp/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="<?php echo $nav->getRootUrl(); ?>favicon.ico">
     <script>
         // Development environment - CDN usage is acceptable
         // tailwind.config = { ... } 전체 삭제
