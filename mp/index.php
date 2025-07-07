@@ -184,6 +184,20 @@ require_once __DIR__ . '/system/includes/header.php';
                 </div>
                 <p class="text-sm text-muted-foreground">Track your daily health activities</p>
             </a>
+
+            <!-- AI Reading Coach -->
+            <a href="modules/reading/ai_reading_coach.php" class="group bg-card border rounded-lg p-6 hover:shadow-lg transition-all duration-200 hover:scale-105">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" class="text-purple-500">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold">AI Reading Coach</h3>
+                </div>
+                <p class="text-sm text-muted-foreground">AI-powered subvocalization solution</p>
+            </a>
         </div>
     </section>
 
